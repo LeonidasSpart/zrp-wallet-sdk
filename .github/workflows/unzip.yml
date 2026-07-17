@@ -3,7 +3,8 @@ name: Unzip Project
 on:
   push:
     paths:
-      - '*.zip'  # triggers when any zip is pushed
+      - '*.zip'
+  workflow_dispatch:  # allows manual trigger
 
 jobs:
   unzip:
@@ -12,10 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Extract ZIP
+      - name: Find and extract ZIP
         run: |
-          unzip zrp-wallet-sdk.zip -d ./extracted
-          rm zrp-wallet-sdk.zip  # optional: delete the zip after extraction
+          ZIP_FILE=$(ls *.zip 2>/dev/null | head -n 1)
+          if [ -z "$ZIP_FILE" ]; then
+            echo "No ZIP file found."
+            exit 1
+          fi
+          echo "Extracting $ZIP_FILE"
+          unzip -o "$ZIP_FILE" -d ./extracted
+          rm "$ZIP_FILE"
 
       - name: Commit and push extracted files
         run: |
