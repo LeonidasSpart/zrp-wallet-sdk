@@ -15,23 +15,21 @@ jobs:
 
       - name: Find and extract ZIP
         run: |
+          # List all files to see what's there
+          ls -la
+
+          # Find the first .zip file
           ZIP_FILE=$(ls *.zip 2>/dev/null | head -n 1)
+
           if [ -z "$ZIP_FILE" ]; then
-            echo "No ZIP file found."
+            echo "❌ No ZIP file found!"
             exit 1
           fi
-          echo "Extracting $ZIP_FILE"
-          mkdir -p extracted_temp
-          unzip -o "$ZIP_FILE" -d extracted_temp
-          # If there is a single top-level folder inside the zip, move its contents to extracted/
-          if [ $(ls -1 extracted_temp | wc -l) -eq 1 ] && [ -d "extracted_temp/$(ls extracted_temp)" ]; then
-            mv extracted_temp/$(ls extracted_temp)/* extracted/
-            rmdir extracted_temp/$(ls extracted_temp)
-            rmdir extracted_temp
-          else
-            mv extracted_temp/* extracted/
-            rmdir extracted_temp
-          fi
+
+          echo "✅ Found ZIP: $ZIP_FILE"
+          unzip -o "$ZIP_FILE" -d ./extracted
+
+          # Remove the ZIP after extraction
           rm "$ZIP_FILE"
 
       - name: Commit and push extracted files
