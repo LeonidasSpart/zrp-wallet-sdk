@@ -3,36 +3,24 @@ name: Unzip Project
 on:
   push:
     paths:
-      - '*.zip'
+      - 'zrp-wallet-sdk.zip'
   workflow_dispatch:
 
 jobs:
   unzip:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Find and extract ZIP
+      - name: Extract ZIP
         run: |
-          ls -la
-          ZIP_FILE=$(ls *.zip 2>/dev/null | head -n 1)
-          if [ -z "$ZIP_FILE" ]; then
-            echo "❌ No ZIP file found!"
-            exit 1
-          fi
-          echo "✅ Found ZIP: $ZIP_FILE"
-          unzip -o "$ZIP_FILE" -d ./extracted
-          rm "$ZIP_FILE"
+          unzip -o zrp-wallet-sdk.zip
+          rm zrp-wallet-sdk.zip
 
-      - name: Commit and push extracted files
+      - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.email "actions@github.com"
           git add .
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Auto-unzip project via Actions"
-            git push
-          fi
+          git diff --staged --quiet || git commit -m "Extract SDK files"
+          git push
