@@ -15,21 +15,14 @@ jobs:
 
       - name: Find and extract ZIP
         run: |
-          # List all files to see what's there
           ls -la
-
-          # Find the first .zip file
           ZIP_FILE=$(ls *.zip 2>/dev/null | head -n 1)
-
           if [ -z "$ZIP_FILE" ]; then
             echo "❌ No ZIP file found!"
             exit 1
           fi
-
           echo "✅ Found ZIP: $ZIP_FILE"
           unzip -o "$ZIP_FILE" -d ./extracted
-
-          # Remove the ZIP after extraction
           rm "$ZIP_FILE"
 
       - name: Commit and push extracted files
@@ -37,5 +30,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Auto-unzip project via Actions" || echo "No changes to commit"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-unzip project via Actions"
+            git push
+          fi
