@@ -19,9 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-This project is a fork of the OKX Web3 Go Wallet SDK (github.com/okx/go-wallet-sdk).
-Modifications and additions from this point forward: Copyright (c) 2026 LeonidasSpart / ZRP.
-The original copyright notice above is retained as required by the MIT License.
