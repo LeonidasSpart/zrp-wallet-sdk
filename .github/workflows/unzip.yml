@@ -1,5 +1,8 @@
 name: Unzip Project
 
+permissions:
+  contents: write
+
 on:
   push:
     paths:
