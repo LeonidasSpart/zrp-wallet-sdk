@@ -1,0 +1,16 @@
+module github.com/LeonidasSpart/zrp-wallet-sdk/coins/oasis
+
+go 1.23.0
+
+require (
+	github.com/btcsuite/btcd/btcutil v1.1.5
+	github.com/LeonidasSpart/zrp-wallet-sdk/crypto v0.0.3
+	github.com/stretchr/testify v1.10.0
+)
+
+require (
+	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/kr/pretty v0.3.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
+)
